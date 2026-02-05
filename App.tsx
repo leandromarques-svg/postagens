@@ -153,14 +153,21 @@ export default function App() {
 
     setIsDownloading(true);
     try {
-      const dataUrl = await toPng(targetRef, { 
-          quality: 1.0,
-          width: 1080,
-          height: 1350,
-          pixelRatio: 1,
-          cacheBust: true, 
-          style: { transform: 'scale(1)', transformOrigin: 'top left' }
-      });
+            const dataUrl = await toPng(targetRef, { 
+                    quality: 1.0,
+                    width: 1080,
+                    height: 1350,
+                    pixelRatio: 1,
+                    cacheBust: true, 
+                    style: { transform: 'scale(1)', transformOrigin: 'top left' },
+                    // Tenta forçar CORS para imagens externas
+                    filter: (node) => {
+                        if (node.tagName === 'IMG') {
+                            node.setAttribute('crossorigin', 'anonymous');
+                        }
+                        return true;
+                    }
+            });
       
       const link = document.createElement('a');
       link.download = filename;
