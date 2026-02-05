@@ -160,9 +160,14 @@ export default function App() {
                     pixelRatio: 1,
                     cacheBust: true, 
                     style: { transform: 'scale(1)', transformOrigin: 'top left' },
-                    // Tenta forçar CORS para imagens externas
                     filter: (node) => {
-                        if (node.tagName === 'IMG') {
+                        if (
+                            node.tagName === 'IMG' &&
+                            node instanceof HTMLImageElement &&
+                            node.src &&
+                            !node.src.startsWith('data:') &&
+                            !node.hasAttribute('crossorigin')
+                        ) {
                             node.setAttribute('crossorigin', 'anonymous');
                         }
                         return true;
