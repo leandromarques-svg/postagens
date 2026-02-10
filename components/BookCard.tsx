@@ -22,7 +22,7 @@ const useBase64Image = (url: string | null) => {
     let isMounted = true;
     const loadImage = async () => {
       try {
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+        const proxyUrl = `http://localhost:4000/api/image-proxy?url=${encodeURIComponent(url)}`;
         const response = await fetch(proxyUrl);
         if (!response.ok) throw new Error('Network error');
         const blob = await response.blob();

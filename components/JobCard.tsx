@@ -31,7 +31,7 @@ const useBase64Image = (url: string | null) => {
       try {
         // Usamos um proxy para garantir que conseguimos pegar o binário da imagem
         // sem ser bloqueado pelo servidor de origem.
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+        const proxyUrl = `http://localhost:4000/api/image-proxy?url=${encodeURIComponent(url)}`;
         
         const response = await fetch(proxyUrl);
         if (!response.ok) throw new Error('Network response was not ok');
