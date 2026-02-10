@@ -4,6 +4,14 @@ import fetch from 'node-fetch';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Middleware para liberar CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 app.get('/api/image-proxy', async (req, res) => {
   let url = req.query.url;
   if (!url || typeof url !== 'string') return res.status(400).send('Missing url param');
