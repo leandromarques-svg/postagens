@@ -31,7 +31,9 @@ const useBase64Image = (url: string | null) => {
       try {
         // Usamos um proxy para garantir que conseguimos pegar o binário da imagem
         // sem ser bloqueado pelo servidor de origem.
-        const proxyUrl = `http://localhost:4000/api/image-proxy?url=${encodeURIComponent(url)}`;
+        const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+        const proxyBase = isLocal ? 'http://localhost:4000' : '';
+        const proxyUrl = `${proxyBase}/api/image-proxy?url=${encodeURIComponent(url)}`;
         
         const response = await fetch(proxyUrl);
         if (!response.ok) throw new Error('Network response was not ok');
